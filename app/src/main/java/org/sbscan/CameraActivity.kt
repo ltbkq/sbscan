@@ -161,10 +161,10 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private fun mapToView(quad: Array<PointF>, srcW: Int, srcH: Int): Array<PointF> {
-        // 预览使用 FIT_CENTER 近似映射(允许小误差, 拖拽可修)
+        // PreviewView 默认 FILL_CENTER: 铺满裁切, 用 max 缩放系数
         val vw = previewView.width.toFloat(); val vh = previewView.height.toFloat()
         if (vw <= 0 || vh <= 0) return quad
-        val scale = minOf(vw / srcW, vh / srcH)
+        val scale = maxOf(vw / srcW, vh / srcH)
         val dx = (vw - srcW * scale) / 2; val dy = (vh - srcH * scale) / 2
         return Array(4) { PointF(quad[it].x * scale + dx, quad[it].y * scale + dy) }
     }
