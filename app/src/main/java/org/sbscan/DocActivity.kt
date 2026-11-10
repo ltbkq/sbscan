@@ -67,7 +67,10 @@ class DocActivity : AppCompatActivity() {
         recycler.adapter = adapter
 
         findViewById<Button>(R.id.btn_add).setOnClickListener {
-            startActivity(Intent(this, CameraActivity::class.java))
+            startActivity(
+                Intent(this, CameraActivity::class.java)
+                    .putExtra("docId", doc.id)
+            )
             finish()
         }
         findViewById<Button>(R.id.btn_pdf).setOnClickListener { exportPdf() }
@@ -109,14 +112,30 @@ class DocActivity : AppCompatActivity() {
     }
 
     private fun pageMenu(file: File, position: Int) {
-        val items = arrayOf("识别文字(OCR)", "增强预览", "删除此页")
+        val pages = doc.pages()
+        val items = mutableListOf("识别文字(OCR)", "增强预览")
+        if (position > 0) items.add("上移")
+        if (position < pages.size - 1) items.add("下移")
+        items.add("删除此页")
         AlertDialog.Builder(this)
             .setTitle("第 ${position + 1} 页")
-            .setItems(items) { _, which ->
-                when (which) {
-                    0 -> ocr(file)
-                    1 -> PageActivity.start(this, file.absolutePath, doc.id)
-                    2 -> {
+            .setItems(items.toTypedArray()) { _, which ->
+                when (items[which]) {
+                    "识别文字(OCR)" -> ocr(file)
+                    "增强预览" -> PageActivity.start(this, file.absolutePath, doc.id)
+                    "上移" -> {
+                        lifecycleScope.launch {
+                            withContext(Dispatchers.IO) { store.movePage(doc, position, position - 1) }
+                            adapter.notifyDataSetChanged()
+                        }
+                    }
+                    "下移" -> {
+                        lifecycleScope.launch {
+                            withContext(Dispatchers.IO) { store.movePage(doc, position, position + 1) }
+                            adapter.notifyDataSetChanged()
+                        }
+                    }
+                    "删除此页" -> {
                         store.deletePage(file)
                         adapter.notifyDataSetChanged()
                     }

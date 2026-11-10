@@ -44,6 +44,8 @@ class CameraActivity : AppCompatActivity() {
     private var stableCount = 0
     private var lastQuad: Array<PointF>? = null
     private var camera: androidx.camera.core.Camera? = null
+    private lateinit var statusView: android.widget.TextView
+    private var docId: String? = null
 
     private val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         if (granted) startCamera() else {
@@ -68,6 +70,8 @@ class CameraActivity : AppCompatActivity() {
         setContentView(R.layout.activity_camera)
         previewView = findViewById(R.id.preview)
         overlay = findViewById(R.id.overlay)
+        statusView = findViewById(R.id.status)
+        docId = intent.getStringExtra("docId")
 
         findViewById<ImageButton>(R.id.btn_shoot).setOnClickListener { shoot() }
         findViewById<ImageButton>(R.id.btn_import).setOnClickListener { importLauncher.launch("image/*") }
@@ -141,8 +145,15 @@ class CameraActivity : AppCompatActivity() {
 
             // 映射到预览视图坐标
             val viewQuad = quad?.let { mapToView(it, oriented.width, oriented.height) }
+            val statusText = when {
+                capturing -> getString(R.string.cam_shooting)
+                quad == null -> getString(R.string.cam_hint)
+                autoShoot -> getString(R.string.cam_detected)
+                else -> getString(R.string.cam_detected)
+            }
             runOnUiThread {
                 if (capturing) overlay.quad = null else overlay.quad = viewQuad
+                if (statusView.text != statusText) statusView.text = statusText
             }
             if (oriented !== bmp) oriented.recycle()
             bmp.recycle()
@@ -179,7 +190,7 @@ class CameraActivity : AppCompatActivity() {
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    CropActivity.start(this@CameraActivity, file.absolutePath, lastQuad)
+                    CropActivity.start(this@CameraActivity, file.absolutePath, lastQuad, docId)
                     finish()
                 }
 

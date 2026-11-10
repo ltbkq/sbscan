@@ -28,4 +28,12 @@
     <string name="permission_camera">需要相机权限才能扫描文档</string>
     <string name="saved_pdf">已导出: %1$s</string>
     <string name="processing">处理中…</string>
+    <string name="cam_hint">将文档放入取景框</string>
+    <string name="cam_detected">已识别文档，保持稳定…</string>
+    <string name="cam_shooting">拍摄中…</string>
+    <string name="auto_shoot">自动拍摄</string>
+    <string name="continue_scan">继续扫描</string>
+    <string name="view_doc">查看文档</string>
+    <string name="move_up">上移</string>
+    <string name="move_down">下移</string>
 </resources>

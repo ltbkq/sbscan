@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000">
@@ -14,6 +15,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="28dp"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:background="#88000000"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:text="@string/cam_hint" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,10 +43,8 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@android:drawable/ic_menu_gallery"
-            android:contentDescription="@string/save"
-            app:tint="@android:color/white"
-            xmlns:app="http://schemas.android.com/apk/res-auto" />
+            android:src="@drawable/ic_gallery"
+            android:contentDescription="@string/save" />
 
         <View
             android:layout_width="0dp"
@@ -39,12 +53,10 @@
 
         <ImageButton
             android:id="@+id/btn_shoot"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:background="@android:drawable/ic_menu_camera"
-            android:contentDescription="@string/shoot"
-            app:tint="@android:color/white"
-            xmlns:app="http://schemas.android.com/apk/res-auto" />
+            android:layout_width="76dp"
+            android:layout_height="76dp"
+            android:background="@drawable/ic_camera"
+            android:contentDescription="@string/shoot" />
 
         <View
             android:layout_width="0dp"
@@ -61,20 +73,16 @@
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@android:drawable/ic_menu_today"
-                android:contentDescription="@string/shoot"
-                app:tint="@android:color/white"
-                xmlns:app="http://schemas.android.com/apk/res-auto" />
+                android:src="@drawable/ic_autocapture"
+                android:contentDescription="@string/auto_shoot" />
 
             <ImageButton
                 android:id="@+id/btn_flash"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@android:drawable/ic_menu_view"
-                android:contentDescription="@string/shoot"
-                app:tint="@android:color/white"
-                xmlns:app="http://schemas.android.com/apk/res-auto" />
+                android:src="@drawable/ic_flash"
+                android:contentDescription="@string/shoot" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

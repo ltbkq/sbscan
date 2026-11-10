@@ -57,6 +57,22 @@ class DocStore(context: Context) {
         file.delete()
     }
 
+    /** 页面排序: 将 fromIndex 页移到 toIndex, 重新编号 */
+    fun movePage(doc: Doc, fromIndex: Int, toIndex: Int) {
+        val pages = doc.pages().toMutableList()
+        if (fromIndex !in pages.indices || toIndex !in pages.indices) return
+        val moved = pages.removeAt(fromIndex)
+        pages.add(toIndex, moved)
+        // 重编号: 先挪到临时名避免冲突
+        pages.forEachIndexed { i, f ->
+            File(doc.dir, "tmp_%03d.jpg".format(i)).also { f.renameTo(it) }
+        }
+        pages.forEachIndexed { i, _ ->
+            File(doc.dir, "tmp_%03d.jpg".format(i)).renameTo(File(doc.dir, "page_%03d.jpg".format(i + 1)))
+        }
+        doc.dir.setLastModified(System.currentTimeMillis())
+    }
+
     fun loadPage(file: File, maxDim: Int = 2048): Bitmap = ImageIO.decodeSampled(file, maxDim)
 
     private fun defaultName(): String {

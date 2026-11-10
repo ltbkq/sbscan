@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.chip.Chip
@@ -109,8 +110,22 @@ class PageActivity : AppCompatActivity() {
                 d
             }
             progress.visibility = android.view.View.GONE
-            DocActivity.start(this@PageActivity, doc.id)
-            finish()
+            // 连续扫描: 保存后选择继续或查看
+            AlertDialog.Builder(this@PageActivity)
+                .setTitle("已保存到「${doc.name}」")
+                .setPositiveButton("继续扫描") { _, _ ->
+                    startActivity(
+                        Intent(this@PageActivity, CameraActivity::class.java)
+                            .putExtra("docId", doc.id)
+                    )
+                    finish()
+                }
+                .setNegativeButton("查看文档") { _, _ ->
+                    DocActivity.start(this@PageActivity, doc.id)
+                    finish()
+                }
+                .setCancelable(false)
+                .show()
         }
     }
 }
