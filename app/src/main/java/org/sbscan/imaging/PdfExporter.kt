@@ -58,7 +58,7 @@ object PdfExporter {
         doc.close()
     }
 
-    /** 兼容旧调用 */
-    fun export(bitmaps: List<Bitmap>, outFile: File) =
+    /** 兼容调用: 不带文字层 */
+    fun exportBitmaps(bitmaps: List<Bitmap>, outFile: File) =
         export(bitmaps.map { Page(it, null) }, outFile)
 }
