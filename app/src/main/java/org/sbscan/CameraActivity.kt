@@ -79,7 +79,7 @@ class CameraActivity : AppCompatActivity() {
         findViewById<ImageButton>(R.id.btn_flash).setOnClickListener {
             val cam = camera ?: return@setOnClickListener
             if (cam.cameraInfo.hasFlashUnit()) {
-                val on = cam.cameraInfo.torchState.value == androidx.camera.core.CameraInfo.TORCH_STATE_ON
+                val on = cam.cameraInfo.torchState.value == androidx.camera.core.TorchState.ON
                 cam.cameraControl.enableTorch(!on)
                 it.alpha = if (!on) 1f else 0.4f
             }
