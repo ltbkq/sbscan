@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">sbscan</string>
+    <string name="docs_empty">还没有文档\n点击下方相机开始扫描</string>
+    <string name="scan">扫描</string>
+    <string name="shoot">拍摄</string>
+    <string name="retake">重拍</string>
+    <string name="next">下一步</string>
+    <string name="save">保存</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+    <string name="rotate">旋转</string>
+    <string name="filter_original">原图</string>
+    <string name="filter_enhance">增亮</string>
+    <string name="filter_gray">灰度</string>
+    <string name="filter_bw">黑白</string>
+    <string name="filter_sharpen">锐化</string>
+    <string name="export_pdf">导出 PDF</string>
+    <string name="share">分享</string>
+    <string name="ocr">识别文字</string>
+    <string name="ocr_copy">复制文字</string>
+    <string name="ocr_save">存为 TXT</string>
+    <string name="add_page">添加页面</string>
+    <string name="delete">删除</string>
+    <string name="rename">重命名</string>
+    <string name="pages">页面</string>
+    <string name="doc_name_hint">文档名称</string>
+    <string name="permission_camera">需要相机权限才能扫描文档</string>
+    <string name="saved_pdf">已导出: %1$s</string>
+    <string name="processing">处理中…</string>
+</resources>
